@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Position {
     private final int x;
     private final int y;
@@ -40,6 +42,6 @@ public class Position {
     }
 
     public int hashCode() {
-        return x + y * 50; // TODO: hermhmehhmeh
+        return Objects.hash(x, y);
     }
 }
