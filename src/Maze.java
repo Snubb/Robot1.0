@@ -8,6 +8,7 @@ public class Maze {
 
     public Maze(java.util.Scanner Scanner) {
         int col = 0;
+        boolean hasGoal = false;
 
         Scanner.useDelimiter(""); // Will make scanner read one character at a time
         while (Scanner.hasNext()) {
@@ -16,12 +17,28 @@ public class Maze {
                 Position newPos = new Position(col, rows);
                 positions.put(newPos.hashCode(), buffer);
                 col++;
-                if (buffer == 'S') start = newPos;
+
+                if (buffer == 'S') {
+                    if (start != null) { // Only true if a start position has already been set
+                        System.err.println("You can only have one start in a maze.");
+                        System.exit(0);
+                    }
+                    start = newPos;
+                }
+
+                if (buffer == 'G') {
+                    hasGoal = true;
+                }
             } else {
                 if (col > columns) columns = col;
                 col = 0;
                 rows++;
             }
+        }
+
+        if (start == null || !hasGoal) {
+            System.err.println("Incomplete maze.");
+            System.exit(0);
         }
     }
 
